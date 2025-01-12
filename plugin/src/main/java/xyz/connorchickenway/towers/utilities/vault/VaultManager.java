@@ -9,6 +9,7 @@ import xyz.connorchickenway.towers.AmazingTowers;
 import xyz.connorchickenway.towers.game.entity.GamePlayer;
 import xyz.connorchickenway.towers.utilities.Logger;
 import xyz.connorchickenway.towers.utilities.ManagerController;
+import xyz.connorchickenway.towers.utilities.StringUtils;
 
 public class VaultManager extends ManagerController {
 
@@ -43,6 +44,15 @@ public class VaultManager extends ManagerController {
             return economyResponse.transactionSuccess();
         }
         return false;
+    }
+
+    public String getPrefix(Player player) {
+        if (hasChat()) {
+            final String prefix = chat.getPlayerPrefix(player);
+            if (!StringUtils.isBlank(prefix))
+                return StringUtils.color(prefix);
+        }
+        return "";
     }
 
     public boolean deposit(GamePlayer gamePlayer, double x) {

@@ -423,14 +423,14 @@ public class Game {
         Player player = event.getPlayer();
         String eventMsg = event.getMessage();
         Team team = getTeam(player.getUniqueId());
-        Logger.info(eventMsg);
         if (state == GameState.LOBBY || state == GameState.STARTING || team == null) {
             String stringBuilder = StringUtils.replacePlaceholders(StaticConfiguration.normal_format,
                     builder(pair(PREFIX, player), pair(PLAYER_NAME, player), pair(MESSAGE, eventMsg)));
             players.forEach(gPlayer -> gPlayer.sendMessage(stringBuilder));
-            return;
-        }
-        team.message(player, eventMsg);
+        }else
+            team.message(player, eventMsg);
+        String console_info = "[%s] %s : %s";
+        Logger.info(String.format(console_info, gameName, player.getName(), eventMsg));
     }
 
     private String getWinnerMessage(Team winnerTeam) {

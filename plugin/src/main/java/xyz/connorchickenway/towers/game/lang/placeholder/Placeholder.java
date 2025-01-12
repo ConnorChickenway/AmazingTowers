@@ -4,7 +4,6 @@ import org.bukkit.entity.Player;
 import xyz.connorchickenway.towers.AmazingTowers;
 import xyz.connorchickenway.towers.game.lang.Lang;
 import xyz.connorchickenway.towers.utilities.Pair;
-import xyz.connorchickenway.towers.utilities.StringUtils;
 import xyz.connorchickenway.towers.utilities.vault.VaultManager;
 
 import java.util.HashMap;
@@ -15,15 +14,15 @@ public interface Placeholder {
     String getKey();
 
     @SafeVarargs
-    public static Map<String, String> builder(Pair<String, String>... placeholders) {
+    static Map<String, String> builder(Pair<String, String>... placeholders) {
         Map<String, String> map = new HashMap<>();
-        for (int i = 0; i < placeholders.length; i++) {
-            map.put("%" + placeholders[i].getKey() + "%", placeholders[i].getValue());
+        for (Pair<String, String> placeholder : placeholders) {
+            map.put("%" + placeholder.getKey() + "%", placeholder.getValue());
         }
         return map;
     }
 
-    public static Pair<String, String> pair(Placeholder placeholder, Object... values) {
+    static Pair<String, String> pair(Placeholder placeholder, Object... values) {
         String value = (placeholder instanceof OneArgumentPlaceholder ?
                 ((OneArgumentPlaceholder) placeholder).perform(values[0]) :
                 ((TwoArgumentPlaceholder) placeholder).perform(values[0], values.length >= 2 ? values[1] : null));
@@ -34,12 +33,12 @@ public interface Placeholder {
         return new Pair<String, String>(key, value);
     }
 
-    public static final OneArgumentPlaceholder COLOR_TEAM = newInstance("color_team"),
+    OneArgumentPlaceholder COLOR_TEAM = newInstance("color_team"),
             COUNT = newInstance("count"), ONLINE_PLAYERS = newInstance("online_players"),
             MAX_PLAYERS = newInstance("max_players"), MESSAGE = newInstance("msg"),
             TEAM_NAME = newInstance("team_name");
 
-    public static final OneArgumentPlaceholder SECONDS = new OneArgumentPlaceholder() {
+    OneArgumentPlaceholder SECONDS = new OneArgumentPlaceholder() {
 
         @Override
         public String getKey() {
@@ -54,7 +53,7 @@ public interface Placeholder {
 
     };
 
-    public static final OneArgumentPlaceholder DISTANCE = new OneArgumentPlaceholder() {
+    OneArgumentPlaceholder DISTANCE = new OneArgumentPlaceholder() {
 
         @Override
         public String getKey() {
@@ -70,14 +69,13 @@ public interface Placeholder {
 
     };
 
-    public static final OneArgumentPlaceholder PREFIX = new OneArgumentPlaceholder() {
+    OneArgumentPlaceholder PREFIX = new OneArgumentPlaceholder() {
 
         private final VaultManager vaultManager = AmazingTowers.getInstance().getVaultManager();
 
         @Override
         public String perform(Object obj) {
-            final String prefix = StringUtils.color(vaultManager.getChat().getPlayerPrefix((Player) obj));
-            return vaultManager.hasChat() ? (StringUtils.isBlank(prefix) ? "" : prefix) : "";
+            return vaultManager.getPrefix((Player) obj);
         }
 
         @Override
@@ -87,7 +85,7 @@ public interface Placeholder {
 
     };
 
-    public static final TwoArgumentPlaceholder KILLER_NAME = new TwoArgumentPlaceholder() {
+    TwoArgumentPlaceholder KILLER_NAME = new TwoArgumentPlaceholder() {
 
         @Override
         public String getKey() {
@@ -96,23 +94,23 @@ public interface Placeholder {
 
         @Override
         public String perform(Object playerObj, Object chatColorObj) {
-            return String.valueOf(chatColorObj) + ((Player) playerObj).getName();
+            return chatColorObj + ((Player) playerObj).getName();
         }
 
-    },
-            PLAYER_NAME = new TwoArgumentPlaceholder() {
+    }, PLAYER_NAME = new TwoArgumentPlaceholder() {
 
-                @Override
-                public String getKey() {
-                    return "player_name";
-                }
+        @Override
+        public String getKey() {
+            return "player_name";
+        }
 
-                @Override
-                public String perform(Object firstObj, Object secondObj) {
-                    return (secondObj != null ? String.valueOf(secondObj) : "") + ((Player) firstObj).getName();
-                }
+        @Override
+        public String perform(Object firstObj, Object secondObj) {
+            return (secondObj != null ? String.valueOf(secondObj) : "") + ((Player) firstObj).getName();
+        }
 
-            };
+    };
+
 
     static OneArgumentPlaceholder newInstance(String key) {
         return new OneArgumentPlaceholder() {
