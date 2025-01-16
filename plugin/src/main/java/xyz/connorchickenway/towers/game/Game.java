@@ -377,7 +377,6 @@ public class Game {
     public void death(PlayerDeathEvent event) {
         event.setDeathMessage(null);
         Player player = event.getEntity();
-        if (!player.isDead()) return;
         Player killer = player.getKiller();
         if (killer != null) {
             if (player.getLastDamageCause().getCause() == DamageCause.PROJECTILE) {
