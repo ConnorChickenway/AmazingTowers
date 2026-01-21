@@ -23,10 +23,10 @@ public class Kit {
     public void sendKit(Player player, Color color) {
         PlayerInventory inventory = player.getInventory();
         inventory.clear();
-        contents.entrySet().forEach(e -> inventory.setItem(e.getKey(), e.getValue()));
-        for (int i = 0; i < armor.length; i++) {
-            if (armor[i] == null) continue;
-            ItemStack itemStack = armor[i].clone();
+        contents.forEach(inventory::setItem);
+        for (ItemStack stack : armor) {
+            if (stack == null) continue;
+            ItemStack itemStack = stack.clone();
             if (ItemUtils.isArmorLeather(itemStack.getType())) {
                 LeatherArmorMeta meta = (LeatherArmorMeta) itemStack.getItemMeta();
                 meta.setColor(color);

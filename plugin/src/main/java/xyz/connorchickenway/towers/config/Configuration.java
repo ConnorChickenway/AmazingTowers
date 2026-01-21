@@ -5,10 +5,11 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import xyz.connorchickenway.towers.AmazingTowers;
 
 import java.io.*;
+import java.nio.file.Files;
 
 public class Configuration {
 
-    private File file;
+    private final File file;
     private FileConfiguration configuration;
 
     public Configuration(String name, String directory) {
@@ -27,7 +28,7 @@ public class Configuration {
             else return;
             InputStream in = AmazingTowers.getInstance().getResource(file.getName());
             if (in == null) return;
-            OutputStream out = new FileOutputStream(file);
+            OutputStream out = Files.newOutputStream(file.toPath());
             byte[] buf = new byte[1024];
             int read;
             while ((read = in.read(buf)) > 0)

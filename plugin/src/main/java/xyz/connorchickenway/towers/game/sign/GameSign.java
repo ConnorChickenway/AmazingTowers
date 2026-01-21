@@ -97,9 +97,6 @@ public class GameSign {
 
     private static String getStatus(GameState state) {
         switch (state) {
-            default:
-            case LOBBY:
-                return StaticConfiguration.lobby_status;
             case STARTING:
                 return StaticConfiguration.starting_status;
             case GAME:
@@ -108,7 +105,9 @@ public class GameSign {
                 return StaticConfiguration.finish_status;
             case RELOADING:
                 return StaticConfiguration.reloading_status;
-
+            case LOBBY:
+            default:
+                return StaticConfiguration.lobby_status;
         }
     }
 

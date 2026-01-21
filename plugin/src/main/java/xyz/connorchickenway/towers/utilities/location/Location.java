@@ -105,16 +105,16 @@ public class Location {
         String[] split = loc.split(";");
         if (split.length >= 6) {
             return new Location(split[5],
-                    Double.valueOf(split[0]),
-                    Double.valueOf(split[1]),
-                    Double.valueOf(split[2]),
-                    Float.valueOf(split[3]),
-                    Float.valueOf(split[4]));
+                    Double.parseDouble(split[0]),
+                    Double.parseDouble(split[1]),
+                    Double.parseDouble(split[2]),
+                    Float.parseFloat(split[3]),
+                    Float.parseFloat(split[4]));
         }
         return new Location(split[3],
-                Double.valueOf(split[0]),
-                Double.valueOf(split[1]),
-                Double.valueOf(split[2]));
+                Double.parseDouble(split[0]),
+                Double.parseDouble(split[1]),
+                Double.parseDouble(split[2]));
     }
 
 }

@@ -16,7 +16,7 @@ public class DefaultKit extends Kit {
         contents.put(8, new ItemStack(Material.BAKED_POTATO, 64));
     }
 
-    private static DefaultKit instance = new DefaultKit();
+    private static final DefaultKit instance = new DefaultKit();
 
     public static DefaultKit getInstance() {
         return instance;

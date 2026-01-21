@@ -6,7 +6,7 @@ import xyz.connorchickenway.towers.utilities.ManagerController;
 
 public class ConfigurationManager extends ManagerController {
 
-    private static Configuration[] configurations = new Configuration[ConfigName.values().length];
+    private static final Configuration[] configurations = new Configuration[ConfigName.values().length];
 
     public ConfigurationManager() {
         super(AmazingTowers.getInstance());
@@ -29,7 +29,7 @@ public class ConfigurationManager extends ManagerController {
             configuration.saveConfiguration();
     }
 
-    public static enum ConfigName {
+    public enum ConfigName {
 
         SCOREBOARD, LANG;
 

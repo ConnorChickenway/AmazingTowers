@@ -34,10 +34,8 @@ public class GameScoreboard {
         scoreMap.forEach((gPlayer, board) ->
         {
             List<String> newLines = new ArrayList<>();
-            for (int i = 0; i < lines.size(); i++) {
-                Line line = lines.get(i);
+            for (Line line : lines)
                 newLines.add(line.hasPlaceholders() ? line.getLine(gPlayer) : line.getLine());
-            }
             board.updateLines(newLines);
         });
     }

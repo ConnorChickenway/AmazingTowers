@@ -1,6 +1,7 @@
 package xyz.connorchickenway.towers.utilities;
 
 import java.io.*;
+import java.nio.file.Files;
 
 public class FileUtils {
 
@@ -20,8 +21,8 @@ public class FileUtils {
         OutputStream out = null;
 
         try {
-            in = new FileInputStream(source);
-            out = new FileOutputStream(destination);
+            in = Files.newInputStream(source.toPath());
+            out = Files.newOutputStream(destination.toPath());
 
             byte[] buffer = new byte[1024];
 

@@ -8,8 +8,8 @@ import java.util.List;
 
 public class Line {
 
-    private String text;
-    private List<PlaceholderKey> keys;
+    private final String text;
+    private final List<PlaceholderKey> keys;
 
     public Line(String text) {
         this.text = text != null ? StringUtils.color(text) : "";

@@ -18,9 +18,9 @@ import java.util.Map;
 
 public class ScoreboardManager extends ManagerController {
 
-    private Map<GameState, List<Line>> linesMap;
-    private String title,
-            date;
+    private final Map<GameState, List<Line>> linesMap;
+    private String title;
+    private SimpleDateFormat simpleDateFormat;
 
     public ScoreboardManager(AmazingTowers plugin) {
         super(plugin);
@@ -31,7 +31,7 @@ public class ScoreboardManager extends ManagerController {
     public void load() {
         FileConfiguration fc = ConfigName.SCOREBOARD.getConfiguration().getFileConfiguration();
         title = StringUtils.color(fc.getString("title", "&e&lTHETOWERS"));
-        date = new SimpleDateFormat(fc.getString("pattern", "dd/MM/yy")).format(Calendar.getInstance().getTime());
+        simpleDateFormat = new SimpleDateFormat(fc.getString("pattern", "dd/MM/yy"));
         //LINES
         GameState[] states = GameState.values();
         for (int i = 0; i < 3; i++) {
@@ -54,7 +54,7 @@ public class ScoreboardManager extends ManagerController {
     }
 
     public String getDate() {
-        return date;
+        return simpleDateFormat.format(Calendar.getInstance().getTime());
     }
 
     public List<Line> getLines(GameState state) {
